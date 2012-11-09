@@ -9,6 +9,9 @@ class Tag < ActiveRecord::Base
         joins(:taggings).group("taggings.tag_id")
   end
 
+  def count
+    Tagging.where(tag_id: self.id).count
+  end
 
   def name= value
     write_attribute(:name, value)
