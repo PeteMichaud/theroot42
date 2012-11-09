@@ -63,5 +63,3 @@ gem 'rdiscount'
 gem 'thin'
 
 gem 'draper'
-
-gem 'acts-as-taggable-on', '~> 2.3.1', github: 'tanelsuurhans/acts-as-taggable-on'
