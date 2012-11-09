@@ -59,7 +59,4 @@ module Theroot
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
-
-  ActsAsTaggableOn.delimiter = '#'
-  ActsAsTaggableOn.remove_unused_tags = true
 end
