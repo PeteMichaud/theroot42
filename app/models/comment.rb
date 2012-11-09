@@ -46,6 +46,9 @@ class Comment < ActiveRecord::Base
     end
     self.taggings.where(:tag_id => delete_tags.map(&:id)).destroy_all
     self.tags.delete_if { |t| delete_tags.include? t }
+    delete_tags.each do |tag|
+      tag
+    end
   end
 
   # Voting Methods
