@@ -1,0 +1,90 @@
+// Place all the styles related to the main controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  margin:0;padding:0;
+}
+
+nav {
+  float:left;
+  border-right:1px solid #ddd;
+  width:170px;
+  padding:15px;
+  a{
+    display:block;
+    padding:5px;
+    margin-bottom:5px;
+    span {
+      color:#666;
+      text-decoration: none;
+      font-size: 0.8em;
+      float:right;
+      font-style:italic;
+    }
+  }
+}
+
+#content {
+  float:left;
+  width:800px;
+  margin:15px;
+}
+
+form {
+  margin:15px;
+  display:block;
+  input, textarea {
+    display:block;
+    width:100%;
+    border:1px solid #ddd;
+  }
+  textarea {
+    height:200px;
+  }
+  input[type=submit] {
+    width:auto;
+  }
+}
+
+#comments {
+  list-style: none;
+  margin:0;
+  padding:0;
+}
+
+.comment {
+  border-top:1px solid #ddd;
+  padding:5px 0;
+  margin-bottom:15px;
+  .meta {
+    a {
+      color:#393939;
+      text-decoration: none;
+      font-weight:bold;
+    }
+    span {
+      color:#666;
+    }
+  }
+  .tags {
+    margin-bottom:15px;
+    font-size: 0.8em;
+    a{
+      text-decoration: none;
+      color:#666;
+    }
+    &:hover a {
+      color:#f00;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+    a.tag_link {
+      display:inline-block;
+      height:8px;
+      width:16px;
+      background:url(tag.png);
+    }
+  }
+}

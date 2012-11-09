@@ -1,0 +1,7 @@
+.comment{:'data-comment-id' => comment.id }
+  .meta
+    %a{ href: user_path(comment.user) }= comment.poster_name
+    %span= "@ #{comment.poster_location}"
+  .tags= render partial: 'comments/tags', locals: { comment: comment }
+
+  = comment.content

@@ -1,0 +1,64 @@
+== The Root Forum
+
+No categories
+
+No threads
+
+Comments have tags
+
+Any user can tag any comment (data saved about who tagged it as what)
+
+Navigation shows top tags (as opposed to categories)
+
+users can save their own favorite tags to be in their navigation
+
+comments can be up and down voted, but it doesn't affect placement. Just forms a list of who likes and dislikes (publically visible)
+
+commenting at the bottom of the "thread" of tagged posts will add a comment with the same tag transparently
+
+There will be no custom styles (maybe a per user css override?), maybe a dark and a light theme though
+
+comments are infinitely loaded (no pages)
+
+comments support root flavored bbcode
+
+system should be smart enough to know who started a "thread" and who is the latest poster in it, and if there are unread posts
+
+    user_tag_views: user_id, tag, viewed_at
+    tag: tag, latest activity (time stamp of most recent comment with tag)
+
+    cull user_tag_views every X days (30?)
+
+threads have thumbnails based on first comment's included pictures
+
+Users have:
+    email
+    password
+    real name
+    DOB
+    location
+    google maps link to location map
+    profile
+    account type (user, moderator, admin)
+    avatar
+    active?
+
+Member list
+    alphabetical by name
+    alpha by email
+    most recent activity? (can help filter out inactive users)
+
+Invite System
+    30 votes in 30 days gets the user invited
+    invites have an inactive user attached that the inviter created, and a post attached with the #invite tag
+    when it's upvoted/liked 30 times within 30 days, that triggers the invite e-mail to go out
+    invite posts are prominantly/annoyingly displayed at the top of the forum until the person votes
+    votes on those threads should be anonymous? maybe? or at least that post should be hidden from the invitee if that
+    person is accepted
+
+Private messages could be just comments? tagged with a username? and maybe a #private?
+
+Chat. I totally want chat built into the site
+    if I make the forum real time in terms of loading comments as they are posted via ajax, then maybe there could be no
+    difference between "threads" and the chat. Maybe chat could be autotagged with the date?
+

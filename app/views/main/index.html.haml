@@ -1,0 +1,9 @@
+%h1= params[:tag]
+
+%ul{ id: :comments, :'data-tags' => params[:tag] }
+  = render partial: '/comments/list', locals: { comments: @comments }
+
+%form
+  %input{ type: :text, id: :tag_list, placeholder: 'comma, separated, list, of, tags', value: params[:tag] }
+  %textarea{ id: :new_comment }
+  %input{ type: :submit, id: :comment_btn }

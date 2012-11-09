@@ -1,0 +1,8 @@
+%h1 New Thread
+
+%ul{ id: :comments, :'data-tags' => params[:tag] }
+
+%form
+  %input{ type: :text, id: :tag_list, placeholder: 'comma, separated, list, of, tags', value: params[:tag] }
+  %textarea{ id: :new_comment }
+  %input{ type: :submit, id: :comment_btn }
