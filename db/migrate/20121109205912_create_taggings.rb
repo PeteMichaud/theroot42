@@ -1,8 +1,9 @@
 class CreateTaggings < ActiveRecord::Migration
   def change
     create_table :taggings do |t|
-      t.belongs_to :tag
-      t.belongs_to :comment
+      t.belongs_to  :tag
+      t.belongs_to  :comment
+      t.integer     :position, unsigned: true, default: 0, null: false
 
       t.timestamps
     end
