@@ -9,7 +9,7 @@
     %p.notice= notice
     %p.alert= alert
     %nav
-      - tag_cloud Comment.tag_counts.sort_by(&:count), %w[s m l] do |tag, css_class|
+      - tag_cloud Tag.tag_counts(10).sort_by(&:count), %w[s m l] do |tag, css_class|
         %a{ href: t_path(tag.name.parameterize), class: css_class}
           = tag.name
           %span= time_ago_in_words(Comment.most_recent_tagged_as(tag))
