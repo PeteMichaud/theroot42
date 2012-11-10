@@ -13,41 +13,12 @@ class Comment < ActiveRecord::Base
 
   # Class Methods
 
-  def self.tagged_with name, opts = {}
+  def self.tagged_with tags, opts = {}
 
-    # Build Options
-    default_opts = {
-        as_param: false,
-        delimiter: '#'
-    }
-    opts = default_opts.merge opts
-
-    # Convert whatever was passed into a Tag array
-    name_array = []
-    if name.is_a? Array
-      name_array = name
-    else
-      name_array << Tag.parse(name, opts[:delimiter])
-      name_array.flatten
-    end
-
-    if name_array.first.is_a? String
-      attr = opts[:as_param] ? 'param_name' : 'name'
-      name_array.map! { |n| n.parameterize } if opts[:as_param]
-      tag_array = name_array.map do |t|
-        Tag.send("find_by_#{attr}!", t)
-      end
-    elsif name_array.first.is_a? Tag
-      tag_array = name_array
-    else
-      raise "Tags must be either strings or Tag objects. Instead got type #{name_array.first.class}"
-    end
+    tag_array = Tag.to_tag_array(tags, opts)
 
     # Collect all comments
-
-    tag_array.map do |tag|
-      tag.comments
-    end.flatten.uniq
+    tag_array.map { |tag| tag.comments }.flatten.uniq
 
   end
 
