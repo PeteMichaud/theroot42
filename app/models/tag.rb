@@ -4,9 +4,9 @@ class Tag < ActiveRecord::Base
   has_many :taggings
   has_many :comments, through: :taggings, uniq: true
 
-  def self.tag_counts
+  def self.tag_counts limit = nil
     Tag.select("tags.*, count(taggings.tag_id) as count").
-        joins(:taggings).group("taggings.tag_id")
+        joins(:taggings).group("taggings.tag_id").order("count DESC").limit(limit)
   end
 
   def count
