@@ -14,17 +14,41 @@ class Comment < ActiveRecord::Base
   # Class Methods
 
   def self.tagged_with name, opts = {}
-    return name.comments if name.is_a? Tag
 
+    # Build Options
     default_opts = {
-      as_param: false
+        as_param: false,
+        delimiter: '#'
     }
     opts = default_opts.merge opts
 
-    attr   = opts[:as_param] ? 'param_name' : 'name'
-    target = opts[:as_param] ? name.parameterize : name
+    attr = opts[:as_param] ? 'param_name' : 'name'
 
-    Tag.send("find_by_#{attr}!", target).comments
+    # Convert whatever was passed into a Tag array
+    name_array = []
+    if name.is_a? Array
+      name_array = name
+    else
+      name_array << Tag.parse(name, opts[:delimiter])
+      name_array.flatten
+    end
+
+    tag_array = name_array.map do |t|
+      if t.is_a? Tag
+        t
+      elsif t.is_a? String
+        target = opts[:as_param] ? t.parameterize : t
+        Tag.send("find_by_#{attr}!", target)
+      else
+        raise "tagged_with only accepts strings, tags, and arrays thereof. Got type #{t.class}"
+      end
+    end
+
+    # Collect all comments
+    tag_array.map do |tag|
+      tag.comments
+    end.flatten.uniq
+
   end
 
   def self.most_recent_tagged_as tag
@@ -44,14 +68,14 @@ class Comment < ActiveRecord::Base
   end
 
   def tag_with name
-    self.tags << parse_tags(name).map do |n|
+    self.tags << Tag.parse(name).map do |n|
       Tag.where(name: n.strip).first_or_create!
     end
     self.save
   end
 
   def untag_with name
-    delete_tags = parse_tags(name).map { |n| Tag.where(name: n.strip).first }
+    delete_tags = Tag.parse(name).map { |n| Tag.where(name: n.strip).first }
 
     self.taggings.where(:tag_id => delete_tags.map(&:id)).destroy_all
     self.tags.delete_if { |t| delete_tags.include? t }
@@ -86,18 +110,6 @@ class Comment < ActiveRecord::Base
 
   def vote value, user_id
     Vote.create!({value: value, user_id: user_id, comment_id: self.id})
-  end
-
-  def parse_tags name
-    new_tags = []
-    if name.is_a? String
-      new_tags = name.gsub(/^#/, '').split('#')
-    elsif name.is_a? Array
-      new_tags = name.map { |n| n.gsub(/^#/, '') }
-    else
-      raise "Expecting a string or array of tags, got #{name.class}"
-    end
-    new_tags
   end
 
   def order_taggings
