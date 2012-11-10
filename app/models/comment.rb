@@ -3,11 +3,13 @@ class Comment < ActiveRecord::Base
 
   belongs_to :user
   has_many :votes
-  has_many :taggings
+  has_many :taggings, order: 'position'
   has_many :tags, through: :taggings, uniq: true
 
   validates :content, presence: true
   validates :user_id, presence: true
+
+  before_save :order_taggings
 
   # Class Methods
 
@@ -45,17 +47,17 @@ class Comment < ActiveRecord::Base
     self.tags << parse_tags(name).map do |n|
       Tag.where(name: n.strip).first_or_create!
     end
+    self.save
   end
 
   def untag_with name
-    delete_tags = parse_tags(name).map do |n|
-      Tag.where(name: n.strip).first
-    end
+    delete_tags = parse_tags(name).map { |n| Tag.where(name: n.strip).first }
+
     self.taggings.where(:tag_id => delete_tags.map(&:id)).destroy_all
     self.tags.delete_if { |t| delete_tags.include? t }
-    delete_tags.each do |tag|
-      tag
-    end
+
+    # remove unused tags
+    delete_tags.each { |tag| tag.destroy if tag.count < 1 }
   end
 
   # Voting Methods
@@ -97,4 +99,11 @@ class Comment < ActiveRecord::Base
     end
     new_tags
   end
+
+  def order_taggings
+    taggings.each_with_index do |t, i|
+      t.position = i
+    end
+  end
+
 end
