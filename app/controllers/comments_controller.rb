@@ -25,7 +25,13 @@ class CommentsController < ApplicationController
   end
 
   def tag_comment
-    @comment
+    @comment = Comment.find params[:comment_id]
+    @comment.tag_with params[:new_tag_list]
+    @comment.save
+    @comment = @comment.decorate
+    respond_to do |format|
+      format.html { render 'comments/show', layout: false, status: 200 }
+    end
   end
 
   # DELETE /comments/1
