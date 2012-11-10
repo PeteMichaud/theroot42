@@ -64,17 +64,23 @@ Chat. I totally want chat built into the site
 
 == Todo
 
-    *   Track who added which tags to which comments? Is this even worthwhile?
-    *   Allow users to save their own favorite tags to the navigation
     *   Allow Voting
-    *   Infinitely Load Comments
     *   BBCode Support
+    *   Implement Comment editing and deleting (respecting permissions)
+    *   Infinitely Load Comments
+
+    *   Implement Member Editing Screen
+    *   Implement Member's List
+
     *   Figure out "thread" interface
     *   Mark Threads "Unread"
     *   Enable thumbnails for comments with pictures when the comment is starting a thread
-    *   Implement Member's List
-    *   Implement Member Editing Screen
-    *   Implement Comment editing and deleting (respecting permissions)
+
     *   Implement Invite System
+    *   Implement Private Messages
+    *   Allow users to save their own favorite tags to the navigation
 
     *   Make the design super slick
+
+    *   Maybe implement Chat
+    *   Track who added which tags to which comments? Is this even worthwhile?
