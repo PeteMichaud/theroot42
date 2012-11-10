@@ -28,6 +28,8 @@ $(document).ready(function(){
 
     $comments.on ('click', '.tag_link', function(e){
         var new_tags = prompt("New Tags");
+        var $comment = $(this).parents('div.comment');
+
         if (new_tags!=null && new_tags!="")
         {
             $.ajax({
@@ -36,13 +38,13 @@ $(document).ready(function(){
                 dataType: 'html',
                 data:
                 {
-                    'comment_id': $(this).parents('div.comment').data('comment-id'),
-                    'new_tag_list': new_tags
+                    'comment_id':   $comment.data('comment-id'),
+                    'new_tag_list': new_tags,
+                    'title':        $comments.data('title')
                 },
                 error: error,
                 success: function (html) {
-                    $new_tags = $(html);
-                    $comments.append($new_comment);
+                    $comment.replaceWith(html);
                 }
             });
         }
