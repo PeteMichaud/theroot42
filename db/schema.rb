@@ -25,8 +25,9 @@ ActiveRecord::Schema.define(:version => 20121109205912) do
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "comment_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "position",   :default => 0, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "taggings", ["comment_id", "tag_id"], :name => "index_taggings_on_comment_id_and_tag_id"
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20121109205912) do
   end
 
   add_index "tags", ["name"], :name => "index_tags_on_name"
+  add_index "tags", ["param_name"], :name => "index_tags_on_param_name"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                                         :default => "",    :null => false
