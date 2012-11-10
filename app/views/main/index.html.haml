@@ -1,9 +1,9 @@
-%h1= Tag.find_by_param_name(params[:tag]).name
+%h1= @tags.map(&:name).join(' #')
 
 %ul{ id: :comments, :'data-tags' => params[:tag] }
   = render partial: '/comments/list', locals: { comments: @comments }
 
 %form
-  %input{ type: :text, id: :tag_list, placeholder: 'comma, separated, list, of, tags', value: params[:tag] }
+  %input{ type: :text, id: :tag_list, placeholder: 'comma, separated, list, of, tags', value: @tags.map(&:name).join(' #') }
   %textarea{ id: :new_comment }
   %input{ type: :submit, id: :comment_btn }
