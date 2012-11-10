@@ -3,7 +3,12 @@ class MainController < ApplicationController
 
   def index
     if params.has_key? :tag
-      @comments = CommentDecorator.decorate(Comment.tagged_with(params[:tag]))
+      tag = Tag.find_by_param_name(params[:tag])
+      if tag.present?
+        @comments = CommentDecorator.decorate(Comment.tagged_with(tag))
+      else
+        redirect_to new_thread_path
+      end
     else
       @comments = CommentDecorator.all
     end
