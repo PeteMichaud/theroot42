@@ -62,3 +62,19 @@ Chat. I totally want chat built into the site
     if I make the forum real time in terms of loading comments as they are posted via ajax, then maybe there could be no
     difference between "threads" and the chat. Maybe chat could be autotagged with the date?
 
+== Todo
+
+    *   Track who added which tags to which comments? Is this even worthwhile?
+    *   Allow users to save their own favorite tags to the navigation
+    *   Allow Voting
+    *   Infinitely Load Comments
+    *   BBCode Support
+    *   Figure out "thread" interface
+    *   Mark Threads "Unread"
+    *   Enable thumbnails for comments with pictures when the comment is starting a thread
+    *   Implement Member's List
+    *   Implement Member Editing Screen
+    *   Implement Comment editing and deleting (respecting permissions)
+    *   Implement Invite System
+
+    *   Make the design super slick
