@@ -22,8 +22,6 @@ class Comment < ActiveRecord::Base
     }
     opts = default_opts.merge opts
 
-    attr = opts[:as_param] ? 'param_name' : 'name'
-
     # Convert whatever was passed into a Tag array
     name_array = []
     if name.is_a? Array
@@ -33,18 +31,20 @@ class Comment < ActiveRecord::Base
       name_array.flatten
     end
 
-    tag_array = name_array.map do |t|
-      if t.is_a? Tag
-        t
-      elsif t.is_a? String
-        target = opts[:as_param] ? t.parameterize : t
-        Tag.send("find_by_#{attr}!", target)
-      else
-        raise "tagged_with only accepts strings, tags, and arrays thereof. Got type #{t.class}"
+    if name_array.first.is_a? String
+      attr = opts[:as_param] ? 'param_name' : 'name'
+      name_array.map! { |n| n.parameterize } if opts[:as_param]
+      tag_array = name_array.map do |t|
+        Tag.send("find_by_#{attr}!", t)
       end
+    elsif name_array.first.is_a? Tag
+      tag_array = name_array
+    else
+      raise "Tags must be either strings or Tag objects. Instead got type #{name_array.first.class}"
     end
 
     # Collect all comments
+
     tag_array.map do |tag|
       tag.comments
     end.flatten.uniq
