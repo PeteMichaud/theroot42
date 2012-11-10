@@ -15,10 +15,21 @@ class Comment < ActiveRecord::Base
 
   def self.tagged_with tags, opts = {}
 
+    # Build Options
+    opts = {
+        get_tags: false
+    }.merge(opts)
+
     tag_array = Tag.to_tag_array(tags, opts)
 
     # Collect all comments
-    tag_array.map { |tag| tag.comments }.flatten.uniq
+    comments = tag_array.map { |tag| tag.comments }.flatten.uniq
+
+    if opts[:get_tags]
+      return comments, tag_array
+    else
+      comments
+    end
 
   end
 
