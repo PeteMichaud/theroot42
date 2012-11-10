@@ -12,6 +12,8 @@ class Comment < ActiveRecord::Base
   # Class Methods
 
   def self.tagged_with name, opts = {}
+    return name.comments if name.is_a? Tag
+
     default_opts = {
       as_param: false
     }
@@ -32,6 +34,11 @@ class Comment < ActiveRecord::Base
 
   def tag_list
     tags.map(&:name).join(' #')
+  end
+
+  def tag_list=list
+    self.tags = []
+    tag_with list
   end
 
   def tag_with name
