@@ -66,6 +66,10 @@ class Comment < ActiveRecord::Base
     delete_tags.each { |tag| tag.destroy if tag.count < 1 }
   end
 
+  def tagged_with? tag
+    (tags & Tag.to_tag_array(tag)).empty?
+  end
+
   # Voting Methods
 
   def vote_sum
