@@ -1,4 +1,4 @@
-%h1= params[:tag]
+%h1= Tag.find_by_param_name(params[:tag]).name
 
 %ul{ id: :comments, :'data-tags' => params[:tag] }
   = render partial: '/comments/list', locals: { comments: @comments }
