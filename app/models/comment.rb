@@ -92,10 +92,18 @@ class Comment < ActiveRecord::Base
     vote false, user_id
   end
 
+  def vote_from user_id
+    user_id = user_id.id if user_id.is_a? User
+    vote = votes.where(user_id: user_id).first
+    vote || Vote.new({comment_id: self.id})
+  end
+
   private
 
   def vote value, user_id
-    Vote.create!({value: value, user_id: user_id, comment_id: self.id})
+    vote = Vote.new_or_destroy({value: value, user_id: user_id, comment_id: self.id})
+    vote.save! if vote.is_a? Vote
+    vote
   end
 
   def order_taggings
