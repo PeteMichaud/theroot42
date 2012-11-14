@@ -26,7 +26,8 @@ $(document).ready(function(){
         return false;
     });
 
-    $comments.on ('click', '.tag_link', function(e){
+    $comments
+    .on ('click', '.tag_link', function(e){
         var new_tags = prompt("New Tags");
         var $comment = $(this).parents('div.comment');
 
@@ -34,11 +35,10 @@ $(document).ready(function(){
         {
             $.ajax({
                 type: 'POST',
-                url: '/tag_comment',
+                url: '/comments/'+ $comment.data('comment-id') +'/tag_comment',
                 dataType: 'html',
                 data:
                 {
-                    'comment_id':   $comment.data('comment-id'),
                     'new_tag_list': new_tags,
                     'title':        $comments.data('title')
                 },
@@ -49,14 +49,42 @@ $(document).ready(function(){
             });
         }
         return false;
+    })
+    .on ('click', '.up_vote', function(e) {
+        return vote($(this), current_user_id, true);
+    })
+    .on ('click', '.down_vote', function(e) {
+        return vote($(this), current_user_id, false);
     });
-
 
     //Helper Functions
 
     function error(xhr)
     {
         alert(xhr.responseText);
+    }
+
+    function vote($link, user_id, value)
+    {
+        var $comment = $link.parents('div.comment');
+
+        $.ajax({
+            type: 'POST',
+            url: '/comments/'+ $comment.data('comment-id') +'/vote',
+            dataType: 'html',
+            data:
+            {
+                'vote[value]': value,
+                'vote[user_id]':   user_id,
+                'vote[comment_id]':   $comment.data('comment-id')
+            },
+            error: error,
+            success: function (html) {
+                $link.parents('.votes').replaceWith(html);
+            }
+        });
+
+        return false;
     }
 
 });
