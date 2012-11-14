@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$content_width: 800px;
+$tr_red: #CC0E00;
 body {
   margin:0;padding:0;
 }
@@ -27,7 +29,7 @@ nav {
 
 #content {
   float:left;
-  width:800px;
+  width:$content_width;
   margin:15px;
 }
 
@@ -73,7 +75,7 @@ form {
         color:#888;
       }
       &.up_vote.voted {
-        color:#CC0E00;
+        color:$tr_red;
       }
       &.down_vote.voted {
         color:#2D6192;
@@ -98,16 +100,47 @@ form {
       color:#666;
     }
     &:hover a {
-      color:#f00;
+      color:$tr_red;
       &:hover{
         text-decoration: underline;
       }
     }
     a.tag_link {
       display:inline-block;
-      height:8px;
-      width:16px;
-      background:url(tag.png);
+      //height:8px;
+      //width:16px;
+      //background:url(tag.png);
+    }
+  }
+}
+
+img.thumb {
+  max-width:200px;
+  max-height:200px;
+  -webkit-transition:2s all;
+  cursor:move;
+  &.expanded {
+    max-width:$content_width;
+    max-height:none;
+  }
+}
+
+.spoiler{
+  margin:20px;
+  .hidden {
+    display:none;
+    padding:20px 0;
+    border-bottom:2px solid #ddd;
+  }
+  .handle {
+    background:$tr_red;
+    color:#fff;
+    font-weight:bold;
+    font-style:italic;
+    padding:3px 10px;
+    cursor:pointer;
+    &:hover{
+      background:lighten($tr_red,25%);
     }
   }
 }
