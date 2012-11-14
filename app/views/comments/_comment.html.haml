@@ -1,7 +1,14 @@
 .comment{:'data-comment-id' => comment.id }
   = render partial: 'votes/vote', locals: { vote: comment.vote_from(current_user) }
+  .controls
+    %a{href: '#', class:'edit_comment',title: 'Edit Comment'}
+      %i.icon-edit
+    %a{href: '#', class:'delete_comment', title: 'Delete Comment'}
+      %i.icon-remove-circle
+    %a{href: '#', class:'quote_comment', title: 'Quote'}
+      %i.icon-comments-alt
   .meta
-    %a{ href: user_path(comment.user) }= comment.poster_name
+    %a{ href: user_path(comment.user), class: 'user_name' }= comment.poster_name
     %span= "@ #{comment.poster_location}"
   .tags= render partial: 'comments/tags', locals: { comment: comment }
 
