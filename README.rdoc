@@ -64,7 +64,6 @@ Chat. I totally want chat built into the site
 
 == Todo
 
-    *   Implement Comment editing and deleting (respecting permissions)
     *   Infinitely Load Comments
 
     *   Implement Member Editing Screen
@@ -83,7 +82,9 @@ Chat. I totally want chat built into the site
     *   Maybe implement Chat
     *   Track who added which tags to which comments? Is this even worthwhile?
     *   Cache images that are used in img tags
+    *   Live Preview, or at least Preview
 
     *   Fix thumbnail resize animation
     *   Implement all BBCode tags and remove unused tags
     *   Fix Nested Quotes (Make Regex Greedy?)
+    *   Make Delete and Edit Respect permissions on the server side
