@@ -4,8 +4,9 @@ Theroot::Application.routes.draw do
   resources :users
   resources :comments do
     member do
-      post '/tag_comment' => 'comments#tag_comment', as: :tag_comment
-      post '/vote' => 'comments#vote', as: :vote
+      post  '/tag_comment' => 'comments#tag_comment', as: :tag_comment
+      post  '/vote' => 'comments#vote', as: :vote
+      get   '/content' => 'comments#content', as: :comment_content
     end
   end
   resources :tags
