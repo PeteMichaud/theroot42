@@ -55,8 +55,31 @@ form {
 
 .comment {
   border-top:1px solid #ddd;
-  padding:5px 0;
+  padding:5px 0 5px 20px;
   margin-bottom:15px;
+  .votes {
+    text-align:center;
+    float:left;
+    width:20px;
+    margin:0 3px 0 -20px;
+    span {
+      font-size:0.8em;
+    }
+    a {
+      cursor:pointer;
+      display:block;
+      color:#bbb;
+      &:hover {
+        color:#888;
+      }
+      &.up_vote.voted {
+        color:#CC0E00;
+      }
+      &.down_vote.voted {
+        color:#2D6192;
+      }
+    }
+  }
   .meta {
     a {
       color:#393939;
