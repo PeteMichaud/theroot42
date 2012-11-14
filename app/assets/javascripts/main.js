@@ -66,6 +66,58 @@ $(document).ready(function(){
         populate_quote($(this).parents('.comment'));
         scroll_to($comment_text);
         return false;
+    })
+    .on('click', '.delete_comment', function(e){
+        if (confirm('Are you sure you want to delete this comment?'))
+        {
+            $comment = $(this).parents('.comment');
+            $.ajax({
+                type: 'DELETE',
+                url: '/comments/' + $comment.data('comment-id'),
+                dataType: 'html',
+                data: { },
+                error: error,
+                success: function (response) {
+                    $comment.remove();
+                }
+            });
+        }
+        return false;
+    })
+    .on('click', '.edit_comment', function(e){
+        $comment = $(this).parents('.comment');
+
+        $.ajax({
+            type: 'GET',
+            url: '/comments/'+ $comment.data('comment-id') +'/content',
+            dataType: 'html',
+            error: error,
+            success: function (content) {
+                $('.content', $comment).replaceWith($("<textarea>" + content + "</textarea><a href='#' class='save_changes'>Save Changes</a>"));
+            }
+        });
+
+        return false;
+    })
+    .on('click', '.save_changes', function(e){
+        var $comment = $(this).parents('.comment');
+        var $this_comment_text = $('textarea', $comment);
+        $.ajax({
+            type: 'PUT',
+            url: '/comments/' + $comment.data('comment-id'),
+            dataType: 'html',
+            data:
+            {
+                'comment[content]': $this_comment_text.val()
+            },
+            error: error,
+            success: function (html) {
+                $comment.replaceWith(html);
+            }
+        });
+
+
+        return false;
     });
 
     //Helper Functions
