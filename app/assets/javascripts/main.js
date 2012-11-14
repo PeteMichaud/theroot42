@@ -60,7 +60,7 @@ $(document).ready(function(){
         $(this).toggleClass('expanded');
     })
     .on('click', '.spoiler .handle', function(e){
-        $('.hidden', $(this).parent()).slideToggle('slow');
+        $('.hidden', $(this).parent()).slideToggle('fast');
      });
 
     //Helper Functions
