@@ -46,6 +46,12 @@ class CommentsController < ApplicationController
     end
   end
 
+  def content
+    respond_to do |format|
+      format.html { render text: @comment.content, status: 200 }
+    end
+  end
+
   # DELETE /comments/1
   def destroy
     @comment.destroy
