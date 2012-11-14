@@ -1,4 +1,5 @@
 .comment{:'data-comment-id' => comment.id }
+  = render partial: 'votes/vote', locals: { vote: comment.vote_from(current_user) }
   .meta
     %a{ href: user_path(comment.user) }= comment.poster_name
     %span= "@ #{comment.poster_location}"
