@@ -61,7 +61,12 @@ $(document).ready(function(){
     })
     .on('click', '.spoiler .handle', function(e){
         $('.hidden', $(this).parent()).slideToggle('fast');
-     });
+    })
+    .on('click', '.quote_comment', function(e){
+        populate_quote($(this).parents('.comment'));
+        scroll_to($comment_text);
+        return false;
+    });
 
     //Helper Functions
 
@@ -91,6 +96,30 @@ $(document).ready(function(){
         });
 
         return false;
+    }
+
+    function populate_quote($comment)
+    {
+        var old_val = $comment_text.val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/comments/'+ $comment.data('comment-id') +'/content',
+            dataType: 'html',
+            error: error,
+            success: function (content) {
+                var quote = "[quote=" + $('.user_name', $comment).text() + "]" + content + "[/quote]";
+                $comment_text.val(old_val + "\n\n" + quote);
+            }
+        });
+
+        return false;
+    }
+
+    function scroll_to($obj) {
+        $('html, body').animate({
+            scrollTop: $obj.offset().top
+        }, 1000);
     }
 
 });
