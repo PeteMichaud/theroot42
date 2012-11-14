@@ -1,0 +1,6 @@
+.votes
+  %a{class: "up_vote#{(!vote.is_dummy? && vote.value) ? ' voted' : '' }"}
+    %i.icon-arrow-up
+  %span= vote.sibling_count
+  %a{class: "down_vote#{(!vote.is_dummy? && !vote.value) ? ' voted' : '' }"}
+    %i.icon-arrow-down
