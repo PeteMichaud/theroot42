@@ -25,12 +25,24 @@ class CommentsController < ApplicationController
   end
 
   def tag_comment
-    @comment = Comment.find params[:comment_id]
     @comment.tag_with params[:new_tag_list]
-    @comment.save
     @comment = @comment.decorate
     respond_to do |format|
       format.html { render 'comments/show', layout: false, status: 200 }
+    end
+  end
+
+  def vote
+    raise "You can only vote as yourself" unless params[:vote][:user_id].to_i == current_user.id
+
+    @vote = Vote.new_or_destroy(params[:vote])
+
+    respond_to do |format|
+      if @vote.is_dummy? || @vote.save
+        format.html { render 'votes/show', layout: false, status: 200 }
+      else
+        format.html { render json: @vote.errors, status: :unprocessable_entity }
+    end
     end
   end
 
