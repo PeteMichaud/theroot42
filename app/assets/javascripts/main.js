@@ -55,7 +55,13 @@ $(document).ready(function(){
     })
     .on ('click', '.down_vote', function(e) {
         return vote($(this), current_user_id, false);
-    });
+    })
+    .on ('click', 'img.thumb', function(e){
+        $(this).toggleClass('expanded');
+    })
+    .on('click', '.spoiler .handle', function(e){
+        $('.hidden', $(this).parent()).slideToggle('slow');
+     });
 
     //Helper Functions
 
