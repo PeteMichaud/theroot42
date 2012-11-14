@@ -64,7 +64,6 @@ Chat. I totally want chat built into the site
 
 == Todo
 
-    *   Allow Voting
     *   BBCode Support
     *   Implement Comment editing and deleting (respecting permissions)
     *   Infinitely Load Comments
