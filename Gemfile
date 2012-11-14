@@ -63,3 +63,5 @@ gem 'rdiscount'
 gem 'thin'
 
 gem 'draper'
+
+gem 'font-awesome-rails'
