@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
-        format.html { head :no_content }
+        format.html { render 'comments/show', layout: false, status: 200 }
       else
         format.html { render json: @comment.errors, status: :unprocessable_entity }
       end
