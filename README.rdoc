@@ -83,3 +83,4 @@ Chat. I totally want chat built into the site
 
     *   Maybe implement Chat
     *   Track who added which tags to which comments? Is this even worthwhile?
+    *   Cache images that are used in img tags
