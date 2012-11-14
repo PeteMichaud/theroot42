@@ -65,3 +65,6 @@ gem 'thin'
 gem 'draper'
 
 gem 'font-awesome-rails'
+
+#BBCode
+gem 'bbgun'
