@@ -17,4 +17,8 @@ class CommentDecorator < Draper::Base
     list.map { |t| h.link_to t.name, h.t_path(t.param_name) }.join(', ').html_safe
   end
 
+  def render_content
+    RbbCode.new.convert(comment.content).html_safe rescue "(Error Parsing)<br /><br />\n\n#{comment.content}".html_safe
+  end
+
 end
