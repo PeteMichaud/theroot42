@@ -3,7 +3,12 @@
 %ul{ id: :comments, :'data-tags' => params[:tag] }
   = render partial: '/comments/list', locals: { comments: @comments }
 
-%form
-  %input{ type: :text, id: :tag_list, placeholder: 'comma, separated, list, of, tags', value: @tags.map(&:name).join(' #') }
-  %textarea{ id: :new_comment }
-  %input{ type: :submit, id: :comment_btn }
+%a{href: t_path(params[:tag], @page+2), class: 'next_page' }= "Page #{@page+2}"
+
+%form#reply_form.sticky
+  %fieldset
+    %legend Reply
+    .controls
+      %textarea{ id: :new_comment }
+      %input{ type: :text, id: :tag_list, placeholder: 'comma, separated, list, of, tags', value: @tags.map(&:name).join(' #') }
+      %input{ type: :submit, id: :comment_btn }
