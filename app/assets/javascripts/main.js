@@ -4,8 +4,10 @@ $(document).ready(function(){
     var $comment_text = $('textarea#new_comment');
     var $comment_tags = $('input#tag_list');
     var $comments = $('#comments');
+
     var $reply_form = $('#reply_form');
     var $reply_controls = $('input, textarea', $reply_form);
+    var $reply_control_container = $('.controls', $reply_form);
 
     $('#comment_btn').click(function(e){
         $.ajax({
@@ -134,7 +136,7 @@ $(document).ready(function(){
         .mouseout(function(e) {
             if (!$reply_controls.is(':focus'))
             {
-                closing_task = setTimeout(toggle_reply_form, 500);
+                closing_task = setTimeout(function(){toggle_reply_form(false)}, 500);
             }
             mouse_hover = false
         })
@@ -147,15 +149,45 @@ $(document).ready(function(){
         setTimeout(function(){
         if (!mouse_hover && !$reply_controls.is(':focus'))
         {
-            toggle_reply_form();
+            toggle_reply_form(false);
         }
         }, 100);
     });
 
-    function toggle_reply_form()
+    function toggle_reply_form(open)
     {
-        $('.controls', $reply_form).slideToggle();
+        if (open == null)
+        {
+            $reply_control_container.slideToggle(500, function(){
+                if ($reply_control_container.is(':visible'))
+                {
+                    $comment_text.focus();
+                }
+            });
+        }
+        else
+        {
+            if (open)
+            {
+                $reply_control_container.slideDown(500, function(){
+                    $comment_text.focus();
+                });
+            }
+            else
+            {
+                $reply_control_container.slideUp(500);
+            }
+        }
     }
+
+    $(document).keyup(function(e){
+        var keyCode = e.keyCode || e.which;
+
+        if (keyCode == 9 && !$reply_control_container.is(':visible'))
+        {
+            $('legend', $reply_form).trigger('click');
+        }
+    });
 
     //Helper Functions
 
