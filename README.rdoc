@@ -77,6 +77,8 @@ Chat. I totally want chat built into the site
     *   Mark Threads "Unread"
     *   Enable thumbnails for comments with pictures when the comment is starting a thread
 
+    *   Implement Search
+
     *   Make the design super slick
 
     *   Maybe implement Chat
