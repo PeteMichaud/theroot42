@@ -17,13 +17,17 @@ class Comment < ActiveRecord::Base
 
     # Build Options
     opts = {
-        get_tags: false
+        get_tags: false,
+        page: 0
     }.merge(opts)
 
     tag_array = Tag.to_tag_array(tags, opts)
 
     # Collect all comments
-    comments = tag_array.map { |tag| tag.comments }.flatten.uniq
+    comments = Comment.joins(:taggings).
+                       where('taggings.tag_id' => tag_array).
+                       limit(Theroot::Application.config.page_size).
+                       offset(opts[:page] * Theroot::Application.config.page_size)
 
     if opts[:get_tags]
       return comments, tag_array
