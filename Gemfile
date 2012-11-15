@@ -67,4 +67,4 @@ gem 'draper'
 gem 'font-awesome-rails'
 
 #BBCode
-gem 'bbgun'
+gem 'rbbcode', path: '../rbbcode' #github: 'PeteMichaud/rbbcode'
