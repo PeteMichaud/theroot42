@@ -2,15 +2,15 @@
   = render partial: 'votes/vote', locals: { vote: comment.vote_from(current_user) }
   .controls
     - if current_user.can_modify(comment)
-      %a{href: '#', class:'edit_comment',title: 'Edit Comment'}
-        %i.icon-edit
-      %a{href: '#', class:'delete_comment', title: 'Delete Comment'}
-        %i.icon-remove-circle
-    %a{href: '#', class:'quote_comment', title: 'Quote'}
-      %i.icon-comments-alt
+      %a{href: '#', class:'edit_comment' }
+        = icon :edit, 'Edit Comment'
+      %a{href: '#', class:'delete_comment'}
+        = icon 'remove-circle', 'Delete Comment'
+    %a{href: '#', class:'quote_comment'}
+      =  icon 'comments-alt', 'Quote'
   .meta
     %a{ href: user_path(comment.user), class: 'user_name' }= comment.poster_name
     %span= "@ #{comment.poster_location}"
   .tags= render partial: 'comments/tags', locals: { comment: comment }
   .content
-    = comment.content.tbbc
+    = comment.render_content
