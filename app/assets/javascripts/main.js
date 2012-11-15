@@ -4,6 +4,8 @@ $(document).ready(function(){
     var $comment_text = $('textarea#new_comment');
     var $comment_tags = $('input#tag_list');
     var $comments = $('#comments');
+    var $reply_form = $('#reply_form');
+    var $reply_controls = $('input, textarea', $reply_form);
 
     $('#comment_btn').click(function(e){
         $.ajax({
@@ -119,6 +121,41 @@ $(document).ready(function(){
 
         return false;
     });
+
+    //Reply Controls
+
+    $('legend', $reply_form).click(function(e){
+        toggle_reply_form();
+    });
+
+    var closing_task = -1;
+    var mouse_hover = false;
+    $('.controls', $reply_form)
+        .mouseout(function(e) {
+            if (!$reply_controls.is(':focus'))
+            {
+                closing_task = setTimeout(toggle_reply_form, 500);
+            }
+            mouse_hover = false
+        })
+        .mouseover(function(e) {
+            clearTimeout(closing_task);
+            mouse_hover = true;
+        });
+
+    $reply_controls.blur(function(e) {
+        setTimeout(function(){
+        if (!mouse_hover && !$reply_controls.is(':focus'))
+        {
+            toggle_reply_form();
+        }
+        }, 100);
+    });
+
+    function toggle_reply_form()
+    {
+        $('.controls', $reply_form).slideToggle();
+    }
 
     //Helper Functions
 
