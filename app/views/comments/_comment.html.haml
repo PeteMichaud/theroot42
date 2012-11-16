@@ -1,4 +1,4 @@
-.comment{:'data-comment-id' => comment.id }
+.comment{data: {comment_id: comment.id }}
   = render partial: 'votes/vote', locals: { vote: comment.vote_from(current_user) }
   .controls
     - if current_user.can_modify(comment)

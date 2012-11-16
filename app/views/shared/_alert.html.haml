@@ -1,5 +1,5 @@
 .alert{class: "alert-#{message_type}"}
-  %a.close{:'data-dismiss' => 'alert', href: '#'} &times;
+  %a.close{data: {dismiss: 'alert'}, href: '#'} &times;
   - unless header.blank?
     %h4.alert-header= header
   - if message.is_a? String

@@ -5,7 +5,7 @@
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-  %body{:'data-user-id' => @current_user_id}
+  %body{data: {user_id: @current_user_id}}
     #container
       %nav
         - tag_cloud Tag.tag_counts(10).sort_by(&:count), %w[s m l] do |tag, css_class|

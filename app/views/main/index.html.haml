@@ -1,9 +1,9 @@
 %h1= @tags.map(&:name).join(' #')
 
-%ul{ id: :comments, :'data-tags' => params[:tag] }
+%ul{ id: :comments, data: {tags: params[:tag]} }
   = render partial: '/comments/list', locals: { comments: @comments }
 
-%a{href: t_path(params[:tag], @page+2), class: 'next_page' }= "Page #{@page+2}"
+= next_page_link
 
 %form#reply_form.sticky
   %fieldset
