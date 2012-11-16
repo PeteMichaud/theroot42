@@ -61,5 +61,7 @@ module Theroot
 
     #Number of Comments to display in a thread page
     config.page_size = 10
+
+    config.default_avatar = 'default_avatar.gif'
   end
 end
