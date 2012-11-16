@@ -1,0 +1,8 @@
+%h1= "Members (#{@users_total})"
+
+= prev_page_link members_path, @users_total
+
+%ul{ id: :members, data: {pages_total: (@users_total.to_f / @page_size).ceil} }
+  = render partial: 'main/member_list', locals: { users: @users }
+
+= next_page_link members_path, @users_total
