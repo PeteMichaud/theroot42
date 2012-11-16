@@ -31,4 +31,22 @@ class User < ActiveRecord::Base
     false
   end
 
+  def self.member_list opts = {}
+    opts = {
+        page_size: Theroot::Application.config.page_size,
+        page: 0,
+        filter: nil,
+    }.merge opts
+
+    if opts[:page] == :last
+      opts[:page] = (User.count.to_f / opts[:page_size]).ceil
+    end
+
+    users = User
+    users.where("`name` LIKE ? or `email` LIKE ? or `location` LIKE ?", "%#{opts[:filter]}%") if opts[:filter]
+    users = users.limit(opts[:page_size]).offset(opts[:page] * opts[:page_size])
+
+    users = UserDecorator.decorate(users)
+  end
+
 end
