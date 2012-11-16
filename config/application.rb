@@ -60,6 +60,6 @@ module Theroot
     config.assets.version = '1.0'
 
     #Number of Comments to display in a thread page
-    config.page_size = 3
+    config.page_size = 10
   end
 end
