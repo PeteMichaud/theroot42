@@ -1,2 +1,4 @@
+- if page.present? && page > 0
+  %li.page_marker= "Page #{page + 1}"
 = list_of comments do |comment|
   = render partial: 'comments/comment', locals: { comment: comment }
