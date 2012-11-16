@@ -1,12 +1,15 @@
 class MainController < ApplicationController
   before_filter :get_page
+  before_filter :get_page_size
+
 
   def index
     if params.has_key? :tag
-        @comments, @tags = Comment.tagged_with(params[:tag], {
+        @comments, @tags, @comments_total = Comment.tagged_with(params[:tag], {
             delimiter: ',',
             as_param: true,
             get_tags: true,
+            get_total: true,
             page: @page
         })
         @comments = CommentDecorator.decorate(@comments)
@@ -33,4 +36,10 @@ class MainController < ApplicationController
     @page = params.has_key?(:page) ? params[:page].to_i - 1 : 0
     @page = 0 if @page < 0
   end
+
+  def get_page_size
+    @page_size = Theroot::Application.config.page_size
+  end
+
+
 end
