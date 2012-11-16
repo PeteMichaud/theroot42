@@ -27,9 +27,10 @@ group :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
-  gem 'forgery'
   gem 'shoulda-matchers'
 end
+
+gem 'forgery'
 
 gem 'jquery-rails'
 
