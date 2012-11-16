@@ -9,6 +9,7 @@
     %a{href: '#', class:'quote_comment'}
       =  icon 'comments-alt', 'Quote'
   .meta
+    = comment.user.render_avatar
     %a{ href: user_path(comment.user), class: 'user_name' }= comment.poster_name
     %span= "@ #{comment.poster_location}"
   .tags= render partial: 'comments/tags', locals: { comment: comment }
