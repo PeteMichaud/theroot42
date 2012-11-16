@@ -49,6 +49,24 @@ nav {
   padding:0;
 }
 
+.next_page, .prev_page {
+  display:block;
+  padding:3px;
+  text-align: center;
+  background:$gray;
+  margin-bottom:20px;
+  color:$dark_gray;
+  font-style:italic;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  &:hover{
+    background:$med_gray;
+    color: darken($dark_gray, 10%);
+  }
+}
+
 .comment {
   border-top:1px solid $med_gray;
   padding:5px 0 5px 20px;
