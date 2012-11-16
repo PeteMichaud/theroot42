@@ -86,5 +86,5 @@ Chat. I totally want chat built into the site
 
     *   Fix thumbnail resize animation
     *   Implement all BBCode tags and remove unused tags
-    *   Fix Nested Quotes (Make Regex Greedy?)
+    *   Fix Nested Quotes (Fix treetop Grammar)
     *   Make Delete and Edit Respect permissions on the server side
