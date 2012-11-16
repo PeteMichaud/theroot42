@@ -64,8 +64,6 @@ Chat. I totally want chat built into the site
 
 == Todo
 
-    *   Infinitely Load Comments
-
     *   Implement Member Editing Screen
     *   Implement Member's List
 
