@@ -1,6 +1,6 @@
 class MainController < ApplicationController
-  before_filter :get_page
   before_filter :get_page_size
+  before_filter :get_page
 
 
   def index
@@ -33,8 +33,15 @@ class MainController < ApplicationController
   private
 
   def get_page
-    @page = params.has_key?(:page) ? params[:page].to_i - 1 : 0
-    @page = 0 if @page < 0
+    @page = 0
+    if params.has_key?(:page)
+      if params[:page] == 'last'
+        @page = :last
+      else
+        @page = params[:page].to_i - 1
+        @page = 0 if @page < 0
+      end
+    end
   end
 
   def get_page_size

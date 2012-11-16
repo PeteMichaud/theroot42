@@ -28,7 +28,11 @@ class Comment < ActiveRecord::Base
     comments =  Comment.joins(:taggings).
                         where('taggings.tag_id' => tag_array)
 
-    total = comments.count if opts[:get_total]
+    total = comments.count
+
+    if opts[:page] == :last
+      opts[:page] = (total / Theroot::Application.config.page_size).ceil
+    end
 
     comments = comments.limit(Theroot::Application.config.page_size).
                         offset(opts[:page] * Theroot::Application.config.page_size)
