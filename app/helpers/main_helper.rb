@@ -10,10 +10,10 @@ module MainHelper
 
   def prev_page_link
     if @page == :last
-      if @comments_total > @page_size
-        @page == 0
+      if @page_size > @comments_total
+        @page = 0
       else
-        @page = (@comments_total / @page_size).ceil
+        @page = (@comments_total.to_f / @page_size).ceil
       end
     end
     if @page > 0
