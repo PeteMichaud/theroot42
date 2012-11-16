@@ -9,6 +9,7 @@ $(document).ready(function(){
     var $reply_controls = $('input, textarea', $reply_form);
     var $reply_control_container = $('.controls', $reply_form);
 
+    // Submit New Reply
     $('#comment_btn').click(function(e){
         $.ajax({
             type: 'POST',
@@ -22,16 +23,19 @@ $(document).ready(function(){
             },
             error: error,
             success: function (html) {
+                //If we're not the last page, then go to the last page
                 if ($('.next_page').length)
                 {
                     window.location = $comments.data('thread_url') + '/last'
                 }
+                //if we are on the last page, append the new comment to the page
                 else
                 {
                     $new_comment = $('<li>' + html + '</li>');
                     $comments.append($new_comment);
                     $comment_text.val('');
                     $('legend', $reply_form).trigger('click');
+                    scroll_to($new_comment);
                 }
             }
         });
@@ -40,6 +44,7 @@ $(document).ready(function(){
     });
 
     $comments
+    //Tag a comment with a new tag
     .on ('click', '.tag_link', function(e){
         var new_tags = prompt("New Tags");
         var $comment = $(this).parents('div.comment');
@@ -69,15 +74,18 @@ $(document).ready(function(){
     .on ('click', '.down_vote', function(e) {
         return vote($(this), current_user_id, false);
     })
+    //Enable resizing for thumbnail images
     .on ('click', 'img.thumb', function(e){
         $(this).toggleClass('expanded');
     })
+    //Enable showing/hiding for spoiler tags
     .on('click', '.spoiler .handle', function(e){
         $('.hidden', $(this).parent()).slideToggle('fast');
     })
+    //Enable quote button
     .on('click', '.quote_comment', function(e){
         populate_quote($(this).parents('.comment'));
-        scroll_to($comment_text);
+        $('legend', $reply_form).trigger('click');
         return false;
     })
     .on('click', '.delete_comment', function(e){
@@ -128,7 +136,6 @@ $(document).ready(function(){
                 $comment.replaceWith(html);
             }
         });
-
 
         return false;
     });
@@ -197,6 +204,37 @@ $(document).ready(function(){
             $('legend', $reply_form).trigger('click');
         }
     });
+
+    //Infinite Loading
+
+    waypoint_opts = {
+        offset: '100%'
+    };
+
+    $('.next_page').waypoint(function(e, direction){
+        var $link = $(this);
+
+        $.get($link.attr('href')+'/ajax', function(html){
+            var $new_page = $(html);
+            $comments.append($new_page);
+            if ($comments.data('pages_total') == $link.data('page'))
+            {
+                $link.remove();
+            }
+            else
+            {
+                var new_page    = $link.data('page') + 1;
+                var old_url     = $link.attr('href');
+                var new_url     = old_url.substr(0, old_url.lastIndexOf('/')+1) + new_page;
+
+                $link
+                    .text("Next Page (" + ($link.data('page') + 1) + ")")
+                    .attr('href', new_url)
+                    .data('page', new_page);
+                $.waypoints('refresh');
+            }
+        });
+    }, waypoint_opts);
 
     //Helper Functions
 
