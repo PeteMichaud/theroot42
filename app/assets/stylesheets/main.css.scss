@@ -49,7 +49,7 @@ nav {
   padding:0;
 }
 
-.next_page, .prev_page {
+.next_page, .prev_page, .page_marker {
   display:block;
   padding:3px;
   text-align: center;
@@ -61,10 +61,16 @@ nav {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+}
+.next_page, .prev_page {
   &:hover{
     background:$med_gray;
     color: darken($dark_gray, 10%);
   }
+}
+
+.page_marker {
+  cursor: default;
 }
 
 .comment {
