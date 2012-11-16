@@ -12,7 +12,7 @@ Theroot::Application.routes.draw do
   resources :tags
   resources :votes
 
-  get '/t(/:tag(/:page))' => 'main#index', as: :t
+  get '/t(/:tag(/:page(/:ajax)))' => 'main#index', as: :t
   get '/new' => 'main#new', as: :new_thread
 
   root to: 'main#home'
