@@ -2,8 +2,8 @@
 
 = prev_page_link
 
-%ul{ id: :comments, data: {tags: params[:tag], thread_url: t_path(parameterized_tags @tags)} }
-  = render partial: '/comments/list', locals: { comments: @comments }
+%ul{ id: :comments, data: {tags: params[:tag], thread_url: t_path(parameterized_tags @tags), pages_total: (@comments_total.to_f / @page_size).ceil} }
+  = render partial: '/comments/list', locals: { comments: @comments, page: @page }
 
 = next_page_link
 
