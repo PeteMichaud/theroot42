@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    var current_user_id = $('body').data('user-id');
+    var current_user_id = $('body').data('user_id');
     var $comment_text = $('textarea#new_comment');
     var $comment_tags = $('input#tag_list');
     var $comments = $('#comments');
@@ -22,10 +22,17 @@ $(document).ready(function(){
             },
             error: error,
             success: function (html) {
-                $new_comment = $('<li>' + html + '</li>');
-                $comments.append($new_comment);
-                $comment_text.val('');
-                $('legend', $reply_form).trigger('click');
+                if ($('.next_page').length)
+                {
+                    window.location = $comments.data('thread_url') + '/last'
+                }
+                else
+                {
+                    $new_comment = $('<li>' + html + '</li>');
+                    $comments.append($new_comment);
+                    $comment_text.val('');
+                    $('legend', $reply_form).trigger('click');
+                }
             }
         });
 
@@ -41,7 +48,7 @@ $(document).ready(function(){
         {
             $.ajax({
                 type: 'POST',
-                url: '/comments/'+ $comment.data('comment-id') +'/tag_comment',
+                url: '/comments/'+ $comment.data('comment_id') +'/tag_comment',
                 dataType: 'html',
                 data:
                 {
@@ -79,7 +86,7 @@ $(document).ready(function(){
             $comment = $(this).parents('.comment');
             $.ajax({
                 type: 'DELETE',
-                url: '/comments/' + $comment.data('comment-id'),
+                url: '/comments/' + $comment.data('comment_id'),
                 dataType: 'html',
                 data: { },
                 error: error,
@@ -95,7 +102,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: 'GET',
-            url: '/comments/'+ $comment.data('comment-id') +'/content',
+            url: '/comments/'+ $comment.data('comment_id') +'/content',
             dataType: 'html',
             error: error,
             success: function (content) {
@@ -110,7 +117,7 @@ $(document).ready(function(){
         var $this_comment_text = $('textarea', $comment);
         $.ajax({
             type: 'PUT',
-            url: '/comments/' + $comment.data('comment-id'),
+            url: '/comments/' + $comment.data('comment_id'),
             dataType: 'html',
             data:
             {
@@ -204,13 +211,13 @@ $(document).ready(function(){
 
         $.ajax({
             type: 'POST',
-            url: '/comments/'+ $comment.data('comment-id') +'/vote',
+            url: '/comments/'+ $comment.data('comment_id') +'/vote',
             dataType: 'html',
             data:
             {
                 'vote[value]': value,
                 'vote[user_id]':   user_id,
-                'vote[comment_id]':   $comment.data('comment-id')
+                'vote[comment_id]':   $comment.data('comment_id')
             },
             error: error,
             success: function (html) {
@@ -227,7 +234,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: 'GET',
-            url: '/comments/'+ $comment.data('comment-id') +'/content',
+            url: '/comments/'+ $comment.data('comment_id') +'/content',
             dataType: 'html',
             error: error,
             success: function (content) {
