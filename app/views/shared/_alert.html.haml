@@ -1,0 +1,13 @@
+.alert{class: "alert-#{message_type}"}
+  %a.close{data: {dismiss: 'alert'}, href: '#'} &times;
+  - unless header.blank?
+    %h4.alert-header= header
+  - if message.is_a? String
+    = message
+  - elsif message.is_a? Array
+    - if message.count == 1
+      = message[0]
+    - else
+      %ul
+        - message.each do |msg|
+          %li= msg

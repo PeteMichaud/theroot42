@@ -25,4 +25,10 @@ class User < ActiveRecord::Base
     active = true
   end
 
+  def can_modify comment
+    return true if account_type != :user
+    return true if comment.user_id == self.id
+    false
+  end
+
 end

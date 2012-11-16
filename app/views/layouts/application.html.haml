@@ -5,14 +5,14 @@
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-  %body{:'data-user-id' => @current_user_id}
-    %p.notice= notice
-    %p.alert= alert
-    %nav
-      - tag_cloud Comment.tag_counts.sort_by(&:count), %w[s m l] do |tag, css_class|
-        %a{ href: t_path(tag.name.parameterize), class: css_class}
-          = tag.name
-          %span= time_ago_in_words(Comment.most_recent_with_tag(tag))
-      %a{ href: new_thread_path } New Thread
-    #content
-      = yield
+  %body{data: {user_id: @current_user_id}}
+    #container
+      %nav
+        - tag_cloud Tag.tag_counts(10).sort_by(&:count), %w[s m l] do |tag, css_class|
+          %a{ href: t_path(tag.name.parameterize), class: css_class}
+            = tag.name
+            %span= time_ago_in_words(Comment.most_recent_tagged_as(tag))
+        %a{ href: new_thread_path } New Thread
+      #content
+        = render_flash
+        = yield

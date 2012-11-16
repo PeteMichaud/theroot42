@@ -2,13 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$content_width: 600px;
+$tr_red: #CC0E00;
+$gray: #eee;
+$med_gray: #ddd;
+$dark_gray: #666;
+
 body {
   margin:0;padding:0;
 }
 
+#container {
+  width:850px;
+  margin:0 auto;
+  overflow: auto;
+}
+
 nav {
   float:left;
-  border-right:1px solid #ddd;
+  border-right:1px solid $dark_gray;
   width:170px;
   padding:15px;
   a{
@@ -16,7 +28,7 @@ nav {
     padding:5px;
     margin-bottom:5px;
     span {
-      color:#666;
+      color:$dark_gray;
       text-decoration: none;
       font-size: 0.8em;
       float:right;
@@ -27,24 +39,8 @@ nav {
 
 #content {
   float:left;
-  width:800px;
+  width:$content_width;
   margin:15px;
-}
-
-form {
-  margin:15px;
-  display:block;
-  input, textarea {
-    display:block;
-    width:100%;
-    border:1px solid #ddd;
-  }
-  textarea {
-    height:200px;
-  }
-  input[type=submit] {
-    width:auto;
-  }
 }
 
 #comments {
@@ -53,10 +49,67 @@ form {
   padding:0;
 }
 
+.next_page, .prev_page, .page_marker {
+  display:block;
+  padding:3px;
+  text-align: center;
+  background:$gray;
+  margin-bottom:20px;
+  color:$dark_gray;
+  font-style:italic;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.next_page, .prev_page {
+  &:hover{
+    background:$med_gray;
+    color: darken($dark_gray, 10%);
+  }
+}
+
+.page_marker {
+  cursor: default;
+}
+
 .comment {
-  border-top:1px solid #ddd;
-  padding:5px 0;
+  border-top:1px solid $med_gray;
+  padding:5px 0 5px 20px;
   margin-bottom:15px;
+  .controls {
+    float:right;
+    a {
+      color:$med_gray;
+      text-decoration: none;
+      &:hover {
+        color:$tr_red;
+      }
+    }
+  }
+  .votes {
+    text-align:center;
+    float:left;
+    width:20px;
+    margin:0 3px 0 -20px;
+    span {
+      font-size:0.8em;
+    }
+    a {
+      cursor:pointer;
+      display:block;
+      color:#bbb;
+      &:hover {
+        color:#888;
+      }
+      &.up_vote.voted {
+        color:$tr_red;
+      }
+      &.down_vote.voted {
+        color:#2D6192;
+      }
+    }
+  }
   .meta {
     a {
       color:#393939;
@@ -64,7 +117,7 @@ form {
       font-weight:bold;
     }
     span {
-      color:#666;
+      color:$dark_gray;
     }
   }
   .tags {
@@ -72,19 +125,161 @@ form {
     font-size: 0.8em;
     a{
       text-decoration: none;
-      color:#666;
+      color:$dark_gray;
     }
     &:hover a {
-      color:#f00;
+      color:$tr_red;
       &:hover{
         text-decoration: underline;
       }
     }
     a.tag_link {
       display:inline-block;
-      height:8px;
-      width:16px;
-      background:url(tag.png);
+    }
+  }
+
+  img.thumb {
+    max-width:200px;
+    max-height:200px;
+    -webkit-transition:2s all;
+    cursor:move;
+    &.expanded {
+      max-width:$content_width;
+      max-height:none;
+    }
+  }
+
+  .spoiler{
+    margin:20px;
+    .hidden {
+      display:none;
+      padding:20px 0;
+      border-bottom:2px solid $med_gray;
+    }
+    .handle {
+      background:$tr_red;
+      color:#fff;
+      font-weight:bold;
+      font-style:italic;
+      padding:3px 10px;
+      cursor:pointer;
+      &:hover{
+        background:lighten($tr_red,25%);
+      }
+    }
+  }
+
+  blockquote {
+    border-bottom:1px solid $med_gray;
+    border-top:1px solid $med_gray;
+    margin:20px;
+    padding:10px 0;
+  }
+
+}
+
+#reply_form {
+  padding:0;margin:20px 0 0 0;
+  width: $content_width;
+
+  &.sticky {
+    position:fixed;
+    bottom:0;
+    .controls {
+      display:none;
+    }
+  }
+
+  fieldset {
+    border:0;
+    padding:0;
+    .controls {
+      padding:15px 0;
+      background:#eee;
+      border-left:1px solid $med_gray;
+      border-right:1px solid $med_gray;
+      border-bottom:2px solid $tr_red;
+
+      background: $gray; /* Old browsers */
+      background: -moz-linear-gradient(top, $gray 0%, $med_gray 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$gray), color-stop(100%,$med_gray)); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, $gray 0%,$med_gray 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, $gray 0%,$med_gray 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, $gray 0%,$med_gray 100%); /* IE10+ */
+      background: linear-gradient(to bottom, $gray 0%,$med_gray 100%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$gray}', endColorstr='#{$med_gray}',GradientType=0 ); /* IE6-9 */
+
+      input, textarea {
+        display:block;
+        margin:0 auto;
+        padding:5px;
+        border:1px solid #ddd;
+      }
+
+      input[type=submit] {
+        width:auto;
+      }
+
+      textarea {
+        display:block;
+        width:$content_width - 40;
+        height:200px;
+        border:1px solid #ddd;
+        height:200px;
+      }
+
+      input[type="text"] {
+        width:$content_width - 40;
+        background:none;
+        -webkit-transition:background .5s;
+        &:hover {
+          background:#f4f4f4;
+          cursor:pointer;
+        }
+        &:focus {
+          background:#fff;
+          cursor:text;
+        }
+      }
+
+    }
+    legend {
+      display:block;
+      padding:5px;
+      margin:0;
+      width: $content_width;
+      text-align: center;
+      color:#fff;
+      font-weight:900;
+      font-style:italic;
+
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+
+      background: $tr_red; /* Old browsers */
+      background: -moz-linear-gradient(top, $tr_red 0%, #910700 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$tr_red), color-stop(100%,#910700)); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, $tr_red 0%,#910700 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, $tr_red 0%,#910700 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, $tr_red 0%,#910700 100%); /* IE10+ */
+      background: linear-gradient(to bottom, $tr_red 0%,#910700 100%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$tr_red}', endColorstr='#910700',GradientType=0 ); /* IE6-9 */
+
+      &:hover{
+        cursor:pointer;
+        background: lighten($tr_red, 15%); /* Old browsers */
+        background: -moz-linear-gradient(top, lighten($tr_red, 15%) 0%, lighten(#910700, 15%) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,lighten($tr_red, 15%)), color-stop(100%,lighten(#910700, 15%))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, lighten($tr_red, 15%) 0%,lighten(#910700, 15%) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, lighten($tr_red, 15%) 0%,lighten(#910700, 15%) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, lighten($tr_red, 15%) 0%,lighten(#910700, 15%) 100%); /* IE10+ */
+        background: linear-gradient(to bottom, lighten($tr_red, 15%) 0%,lighten(#910700, 15%) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{lighten($tr_red, 15%)}', endColorstr='#{lighten(#910700, 15%)}',GradientType=0 ); /* IE6-9 */
+      }
     }
   }
 }

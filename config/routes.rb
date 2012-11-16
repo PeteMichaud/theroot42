@@ -4,15 +4,16 @@ Theroot::Application.routes.draw do
   resources :users
   resources :comments do
     member do
-      post '/tag_comment/:id' => 'comments#tag_comment', as: :tag_comment
+      post  '/tag_comment' => 'comments#tag_comment', as: :tag_comment
+      post  '/vote' => 'comments#vote', as: :vote
+      get   '/content' => 'comments#content', as: :comment_content
     end
   end
   resources :tags
   resources :votes
 
-  match '/t/:tag' => 'main#index', as: :t
-
-  match '/new' => 'main#new', as: :new_thread
+  get '/t(/:tag(/:page(/:ajax)))' => 'main#index', as: :t
+  get '/new' => 'main#new', as: :new_thread
 
   root to: 'main#home'
 end

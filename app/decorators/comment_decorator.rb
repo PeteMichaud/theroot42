@@ -12,9 +12,13 @@ class CommentDecorator < Draper::Base
   end
 
   def render_tag_list
-    list = comment.tag_list
-    list.shift if h.params[:tag] == list.first
-    list.map { |t| h.link_to t, h.t_path(t.parameterize) }.join(', ').html_safe
+    list = comment.tags
+    list.shift if h.params[:tag] == list.first.param_name
+    list.map { |t| h.link_to t.name, h.t_path(t.param_name) }.join(', ').html_safe
+  end
+
+  def render_content
+    RbbCode.new.convert(comment.content).html_safe rescue "(Error Parsing)<br /><br />\n\n#{comment.content}".html_safe
   end
 
 end

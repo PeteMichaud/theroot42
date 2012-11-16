@@ -1,9 +1,16 @@
-%h1= params[:tag]
+%h1= @tags.map(&:name).join(' #')
 
-%ul{ id: :comments, :'data-tags' => params[:tag] }
-  = render partial: '/comments/list', locals: { comments: @comments }
+= prev_page_link
 
-%form
-  %input{ type: :text, id: :tag_list, placeholder: 'comma, separated, list, of, tags', value: params[:tag] }
-  %textarea{ id: :new_comment }
-  %input{ type: :submit, id: :comment_btn }
+%ul{ id: :comments, data: {tags: params[:tag], thread_url: t_path(parameterized_tags @tags), pages_total: (@comments_total.to_f / @page_size).ceil} }
+  = render partial: '/comments/list', locals: { comments: @comments, page: @page }
+
+= next_page_link
+
+%form#reply_form.sticky
+  %fieldset
+    %legend Reply
+    .controls
+      %textarea{ id: :new_comment }
+      %input{ type: :text, id: :tag_list, placeholder: 'comma, separated, list, of, tags', value: @tags.map(&:name).join(' #') }
+      %input{ type: :submit, id: :comment_btn }

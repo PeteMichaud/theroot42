@@ -27,9 +27,10 @@ group :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
-  gem 'forgery'
   gem 'shoulda-matchers'
 end
+
+gem 'forgery'
 
 gem 'jquery-rails'
 
@@ -64,4 +65,7 @@ gem 'thin'
 
 gem 'draper'
 
-gem 'acts-as-taggable-on', '~> 2.3.1', github: 'tanelsuurhans/acts-as-taggable-on'
+gem 'font-awesome-rails'
+
+#BBCode
+gem 'rbbcode', path: '../rbbcode' #github: 'PeteMichaud/rbbcode'
