@@ -18,12 +18,17 @@ hgroup {
   width:850px;
   border-bottom:3px solid $med_gray;
   h1 {
-    background:$tr_red url(header-whole.gif);
-    width:32px;height:0px;
-    padding:32px 0 0 0;
-    margin:0 168px 0 0;
-    overflow:hidden;
     display: inline-block;
+    width:32px;height:32px;
+    margin:0 168px 0 0;
+    a {
+      background:$tr_red url(header-whole.gif);
+      width:32px;height:0px;
+      padding:32px 0 0 0;
+      margin:0;
+      overflow:hidden;
+      display:block;
+    }
   }
   ul {
     margin:0 0 10px 0;
