@@ -56,4 +56,8 @@ module ApplicationHelper
     end
   end
 
+  def parameterized_tags tags
+    tags.map { |t| t.name.parameterize }.join ','
+  end
+
 end
