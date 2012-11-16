@@ -18,22 +18,26 @@ class Comment < ActiveRecord::Base
     # Build Options
     opts = {
         get_tags: false,
+        get_total: false,
         page: 0
     }.merge(opts)
 
     tag_array = Tag.to_tag_array(tags, opts)
 
     # Collect all comments
-    comments = Comment.joins(:taggings).
-                       where('taggings.tag_id' => tag_array).
-                       limit(Theroot::Application.config.page_size).
-                       offset(opts[:page] * Theroot::Application.config.page_size)
+    comments =  Comment.joins(:taggings).
+                        where('taggings.tag_id' => tag_array)
 
-    if opts[:get_tags]
-      return comments, tag_array
-    else
-      comments
-    end
+    total = comments.count if opts[:get_total]
+
+    comments = comments.limit(Theroot::Application.config.page_size).
+                        offset(opts[:page] * Theroot::Application.config.page_size)
+
+    ret = [] << comments
+    ret << tag_array if opts[:get_tags]
+    ret << total if opts[:get_total]
+
+    ret.count > 1 ? ret : ret[0]
 
   end
 
