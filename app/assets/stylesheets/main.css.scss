@@ -12,15 +12,50 @@ body {
   margin:0;padding:0;
 }
 
+hgroup {
+  padding:10px 0 0 0;
+  margin:0 auto;
+  width:850px;
+  border-bottom:3px solid $med_gray;
+  h1 {
+    background:$tr_red url(header-whole.gif);
+    width:32px;height:0px;
+    padding:32px 0 0 0;
+    margin:0 168px 0 0;
+    overflow:hidden;
+    display: inline-block;
+  }
+  ul {
+    margin:0 0 10px 0;
+    padding:0;
+    list-style:none;
+    display:inline-block;
+    li {
+      display:inline-block;
+      margin:0 0 0 27px;
+      a {
+        color: $tr_red;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+          color:#333;
+        }
+      }
+    }
+  }
+}
+
 #container {
   width:850px;
   margin:0 auto;
+  padding:40px 0 0 0;
   overflow: auto;
+  border-top:7px solid $gray;
 }
 
 nav {
   float:left;
-  border-right:1px solid $dark_gray;
+  border-right:1px solid $med_gray;
   width:170px;
   padding:15px;
   a{
@@ -40,7 +75,11 @@ nav {
 #content {
   float:left;
   width:$content_width;
-  margin:15px;
+  margin:0 15px 15px 15px;
+  h1 {
+    margin:0 0 20px 0;
+    color:$dark_gray;
+  }
 }
 
 #comments {
