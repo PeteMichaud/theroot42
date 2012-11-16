@@ -19,14 +19,15 @@ class Comment < ActiveRecord::Base
     opts = {
         get_tags: false,
         get_total: false,
+        paged: true,
         page: 0
     }.merge(opts)
 
     tag_array = Tag.to_tag_array(tags, opts)
 
     # Collect all comments
-    comments =  Comment.joins(:taggings).
-                        where('taggings.tag_id' => tag_array)
+    comments = Comment.joins(:taggings).
+                       where('taggings.tag_id' => tag_array)
 
     total = comments.count
 
@@ -34,8 +35,10 @@ class Comment < ActiveRecord::Base
       opts[:page] = (total / Theroot::Application.config.page_size).ceil
     end
 
-    comments = comments.limit(Theroot::Application.config.page_size).
-                        offset(opts[:page] * Theroot::Application.config.page_size)
+    if opts[:paged]
+      comments = comments.limit(Theroot::Application.config.page_size).
+                          offset(opts[:page] * Theroot::Application.config.page_size)
+    end
 
     ret = [] << comments
     ret << tag_array if opts[:get_tags]
@@ -47,7 +50,7 @@ class Comment < ActiveRecord::Base
 
   def self.most_recent_tagged_as tag
     tag = tag.name if tag.is_a? Tag
-    Comment.tagged_with(tag).last.created_at
+    Comment.tagged_with(tag, {paged: false}).last.created_at
   end
 
   # Tag Methods
@@ -65,6 +68,11 @@ class Comment < ActiveRecord::Base
     self.tags << Tag.parse(name).map do |n|
       Tag.where(name: n.strip).first_or_create!
     end
+    self.save
+  end
+
+  def tag tag_list
+    self.tags = tag_list
     self.save
   end
 
