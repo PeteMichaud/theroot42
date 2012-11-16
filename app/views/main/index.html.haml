@@ -1,11 +1,11 @@
 %h1= @tags.map(&:name).join(' #')
 
-= prev_page_link
+= prev_page_link t_path(parameterized_tags @tags), @comments_total
 
 %ul{ id: :comments, data: {tags: params[:tag], thread_url: t_path(parameterized_tags @tags), pages_total: (@comments_total.to_f / @page_size).ceil} }
   = render partial: '/comments/list', locals: { comments: @comments, page: @page }
 
-= next_page_link
+= next_page_link t_path(parameterized_tags @tags), @comments_total
 
 %form#reply_form.sticky
   %fieldset
