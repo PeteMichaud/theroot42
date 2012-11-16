@@ -36,6 +36,28 @@ class MainController < ApplicationController
 
   end
 
+  def members
+
+    @users_total = User.count
+    @page_size = 500
+
+    @users = User.member_list({
+        page_size:  @page_size,
+        page:       @page,
+        filter:     params[:filter]
+    })
+
+    respond_to do |format|
+      if params.has_key? :ajax
+        format.html { render partial: '/main/member_list', locals: { users: @users, page: @page }, status: 200 }
+      else
+        format.html { }
+      end
+    end
+
+
+  end
+
   def home
   end
 
