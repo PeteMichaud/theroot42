@@ -24,6 +24,8 @@ $(document).ready(function(){
             success: function (html) {
                 $new_comment = $('<li>' + html + '</li>');
                 $comments.append($new_comment);
+                $comment_text.val('');
+                $('legend', $reply_form).trigger('click');
             }
         });
 
