@@ -1,2 +1,2 @@
 = list_of users do |user|
-  = user.name
+  = render partial: 'main/member', locals: { user: user }
