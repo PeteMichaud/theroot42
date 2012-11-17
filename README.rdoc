@@ -64,8 +64,6 @@ Chat. I totally want chat built into the site
 
 == Todo
 
-    *   Implement Member's List
-
     *   Implement Invite System
     *   Implement Private Messages
     *   Allow users to save their own favorite tags to the navigation
@@ -87,3 +85,4 @@ Chat. I totally want chat built into the site
     *   Implement all BBCode tags and remove unused tags
     *   Fix Nested Quotes (Fix treetop Grammar)
     *   Make Delete and Edit Respect permissions on the server side
+    *   View Member Profile
