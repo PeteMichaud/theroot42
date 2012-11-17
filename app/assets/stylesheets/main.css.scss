@@ -10,6 +10,14 @@ $dark_gray: #666;
 
 body {
   margin:0;padding:0;
+  a {
+    color:$tr_red;
+    text-decoration: none;
+    &:hover {
+      color:#333;
+      text-decoration: underline;
+    }
+  }
 }
 
 hgroup {
@@ -91,6 +99,28 @@ nav {
   list-style: none;
   margin:0;
   padding:0;
+}
+
+#members {
+  margin:0;padding:0;
+  list-style:none;
+  overflow: auto;
+  li {
+    float:left;
+    width:185px;margin-right:10px;
+    height:100px;
+    border-right:1px solid $med_gray;
+    &:nth-child(3n+3) {
+      border-right:none;
+    }
+    span {
+      display: block;
+    }
+    img {
+      float:left;
+      margin-right:6px;
+    }
+  }
 }
 
 .next_page, .prev_page, .page_marker {
